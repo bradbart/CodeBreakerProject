@@ -12,7 +12,7 @@ function guess() {
         return false; 
     }
 
-    attempt.value += 1; 
+    attempt.value = attempt.value * 1.0 + 1; 
     if(getResults(input.value)) {
         setMessage("You Win! :)"); 
         showAnswer(true); 
@@ -31,7 +31,7 @@ function guess() {
 function showAnswer(success) {
     var element = document.getElementById('code'); 
     element.innerHTML = answer.value; 
-    element.className = success && "success" || "failure"; 
+    element.className = success && " success" || " failure"; 
 }
 
 function showReplay() {
@@ -54,7 +54,7 @@ function setMessage(msg) {
 
 function validateInput(input) {
     return input.length == 4 ||
-        (setMessage("Guesses must be exactly 4 characters long.") && false); 
+        (setMessage("Guesses must be exactly 4 characters long.") || false); 
 }
 
 
@@ -70,8 +70,8 @@ function getResults(input) {
     var content = ''; 
     for(var i in input) {
         var text = (answer.value[i] == input[i] && types.correct)
-            || (answer.value.indexOf(input[i] !== -1) && types.diffPos)
-            || answer.value.wrong; 
+            || ((answer.value.indexOf(input[i]) !== -1) && types.diffPos)
+            || types.wrong; 
         count += answer.value[i] == input[i] && 1 || 0; 
         content += text; 
     }
